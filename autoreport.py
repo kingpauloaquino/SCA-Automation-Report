@@ -1,39 +1,33 @@
-import requests
+import logging
+import threading
 from datetime import datetime
-import pytz
 import time
 
-def getTimeNow():
-    tz_PS = pytz.timezone('US/Pacific')
-    datetime_PS = datetime.now(tz_PS)
-    pst = datetime_PS.strftime("%H%M%S")
-    pstRealtime = datetime_PS.strftime("%H:%M:%S")
-    pstimes = int(pst)
-    #print(pstimes)
-    #print(pstRealtime)
+from daily_report import daily_report
+from lot_bid_report import lot_bid_report
 
-    if pstimes >= 235500 and pstimes <= 235500:
-        print("It's time...")
-	print(pstimes)
-        print(pstRealtime)
-        return True
-    else:
-        #print("No, It's not time")
-        return False
+dreport = daily_report()
+lbreport = lot_bid_report()
 
-def processAPI():
-    url = 'https://index.scrapcat.net/v2/daily-reports-process'
-    response = requests.get(url)
-    print(response)
-    sleepMe = 60 * 30 # sleep 30 minutes
-    time.sleep(sleepMe)
-    print("The auto report processed is done, the system will become reactive after 30 minutes.")
+def print_time_1():
+    dreport.Start()
 
-print("Started... v2")
-while(True):
+def print_time_2():
+    lbreport.Start()
 
-    time.sleep(1)
-    res = getTimeNow()
-    if res == True:
-        processAPI()
+try: 
 
+   t1 = threading.Thread(target=print_time_1)
+   t2 = threading.Thread(target=print_time_2)
+
+   # starting thread 1
+   t1.start()
+   # starting thread 2
+   t2.start()
+
+   # wait until thread 1 is completely executed
+   t1.join()
+   # wait until thread 2 is completely executed
+   t2.join()
+except:
+   print("Error: unable to start thread")
