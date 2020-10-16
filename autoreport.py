@@ -5,9 +5,11 @@ import time
 
 from daily_report import daily_report
 from lot_bid_report import lot_bid_report
+from unit_in_system import unit_in_system
 
 dreport = daily_report()
 lbreport = lot_bid_report()
+unitreport = unit_in_system()
 
 def print_time_1():
     dreport.Start()
@@ -15,19 +17,21 @@ def print_time_1():
 def print_time_2():
     lbreport.Start()
 
+def print_time_3():
+    unitreport.Start()
+
 try: 
 
    t1 = threading.Thread(target=print_time_1)
    t2 = threading.Thread(target=print_time_2)
+   t3 = threading.Thread(target=print_time_3)
 
-   # starting thread 1
    t1.start()
-   # starting thread 2
    t2.start()
+   t3.start()
 
-   # wait until thread 1 is completely executed
    t1.join()
-   # wait until thread 2 is completely executed
    t2.join()
+   t3.join()
 except:
    print("Error: unable to start thread")

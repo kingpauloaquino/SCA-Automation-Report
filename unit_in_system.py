@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 import time
 
-class daily_report:
+class unit_in_system:
 
     def getTimeNow(self):
         tz_PS = pytz.timezone('US/Pacific')
@@ -11,7 +11,7 @@ class daily_report:
         pst = datetime_PS.strftime("%H%M%S")
         # pstRealtime = datetime_PS.strftime("%H:%M:%S")
         pstimes = int(pst)
-        print("Daily report: " + pst)
+        print("Unit in system: " + pst)
 
         if pstimes >= 235500 and pstimes <= 235500:
             print("It's time...")
@@ -20,7 +20,7 @@ class daily_report:
             return False
 
     def processAPI(self):
-        url = 'https://index.scrapcatapp.com/v2/daily-reports-process'
+        url = 'https://index.scrapcatapp.com/api/units-in-system-process'
         response = requests.get(url)
         print(response)
         sleepMe = 60 * 30  # sleep 30 minutes
@@ -29,7 +29,7 @@ class daily_report:
 
     def Start(self):
 
-        print("Started... daily report")
+        print("Started... Unit in system")
 
         while(True):
 

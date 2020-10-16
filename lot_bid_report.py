@@ -20,7 +20,7 @@ class lot_bid_report:
             return False
 
     def processAPI(self):
-        url = 'https://index.scrapcat.net/lot-bid-reports-process'
+        url = 'https://index.scrapcatapp.com/lot-bid-reports-process'
         response = requests.get(url)
         print(response)
         sleepMe = 60 * 30  # sleep 30 minutes
